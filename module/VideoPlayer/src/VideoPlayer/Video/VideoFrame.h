@@ -34,7 +34,7 @@ public:
     int width(){return mWidth;}
     int height(){return mHeight;}
     QImage toQImage();
-
+    void fromQImage(QImage&);
 protected:
     uint8_t *mYuv420Buffer;
 
@@ -46,6 +46,7 @@ protected:
     AVFrame *pFrameRGB;
     uint8_t * rgbBuffer;
     SwsContext *img_convert_ctx;
+    SwsContext *img_restore_ctx;
 };
 
 #endif // VIDEOFRAME_H

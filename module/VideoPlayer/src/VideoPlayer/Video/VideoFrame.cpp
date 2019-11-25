@@ -7,6 +7,7 @@ VideoFrame::VideoFrame()
     pFrameRGB = nullptr;
     rgbBuffer = nullptr;
     img_convert_ctx = nullptr;
+    img_restore_ctx = nullptr;
 }
 
 VideoFrame::~VideoFrame()
@@ -20,6 +21,11 @@ VideoFrame::~VideoFrame()
     {
         sws_freeContext(img_convert_ctx);
         img_convert_ctx = nullptr;
+    }
+    if(img_restore_ctx != nullptr)
+    {
+        sws_freeContext(img_restore_ctx);
+        img_restore_ctx = nullptr;
     }
     if (rgbBuffer!=nullptr)
     {
@@ -50,6 +56,11 @@ void VideoFrame::initBuffer(const int &width, const int &height)
         sws_freeContext(img_convert_ctx);
         img_convert_ctx = nullptr;
     }
+    if(img_restore_ctx != nullptr)
+    {
+        sws_freeContext(img_restore_ctx);
+        img_restore_ctx = nullptr;
+    }
     if (rgbBuffer!=nullptr)
     {
         free(rgbBuffer);
@@ -77,6 +88,7 @@ void VideoFrame::initBuffer(const int &width, const int &height)
     rgbBuffer = (uint8_t *) malloc(numBytes*sizeof(uint8_t));
     avpicture_fill((AVPicture *) pFrameRGB,rgbBuffer,AV_PIX_FMT_RGB32,width,height);
     img_convert_ctx = sws_getContext(width, height, AV_PIX_FMT_YUV420P, width, height, AV_PIX_FMT_RGB32, SWS_BICUBIC, NULL, NULL, NULL);
+    img_restore_ctx = sws_getContext(width, height, AV_PIX_FMT_RGB32, width, height, AV_PIX_FMT_YUV420P,   SWS_BICUBIC, NULL, NULL, NULL);
 }
 
 void VideoFrame::setYUVbuf(const uint8_t *buf)
@@ -111,4 +123,12 @@ QImage VideoFrame::toQImage()
     //把这个RGB数据 用QImage加载
     QImage tmpImg((uchar *)rgbBuffer,mWidth,mHeight,QImage::Format_RGB32);
     return tmpImg.copy();
+}
+
+void VideoFrame::fromQImage(QImage & qImage)
+{
+    assert(mWidth == qImage.width());
+    assert(mHeight == qImage.height());
+    pFrameRGB->data[0]=qImage.bits();
+    sws_scale(img_restore_ctx,(uint8_t const* const*)pFrameRGB->data,pFrameRGB->linesize,0,mHeight,pFrame->data,pFrame->linesize);
 }
