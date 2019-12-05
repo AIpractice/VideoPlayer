@@ -314,6 +314,39 @@ void MainWindow::onDisplayVideo(std::shared_ptr<VideoFrame> videoFrame)
     ui->widget_videoPlayer->inputOneFrame(videoFrame);
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event){
+    int v;
+    if(mPlayer->state()==VideoPlayerState::VideoPlayer_Stop)
+        return;
+    switch(event->key()){
+    case Qt::Key_Left:
+        ui->horizontalSlider->backward();
+        break;
+    case Qt::Key_Right:
+        ui->horizontalSlider->forward();
+        break;
+    case Qt::Key_Space:
+        if(!ui->pushButton_play->isHidden())
+            mPlayer->play();
+        else if(!ui->pushButton_pause->isHidden())
+            mPlayer->pause();
+        break;
+    case Qt::Key_Up:
+        v = ui->horizontalSlider_volume->value()+1;
+        if(v>ui->horizontalSlider_volume->maximum())
+            v = ui->horizontalSlider_volume->maximum();
+        ui->horizontalSlider_volume->setValue(v);
+        break;
+    case Qt::Key_Down:
+        v = ui->horizontalSlider_volume->value()-1;
+        if(v<ui->horizontalSlider_volume->minimum())
+            v = ui->horizontalSlider_volume->minimum();
+        ui->horizontalSlider_volume->setValue(v);
+        break;
+    }
+}
+
+
 //图片显示部件时间过滤器处理
 bool MainWindow::eventFilter(QObject *target, QEvent *event)
 {

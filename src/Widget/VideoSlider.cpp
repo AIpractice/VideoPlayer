@@ -34,6 +34,23 @@ VideoSlider::~VideoSlider()
 
 }
 
+void VideoSlider::forward(){
+
+    int v = value()+10;
+    if(v>maximum())
+        v = maximum();
+    setValue(v);
+    emit sig_valueChanged(v);
+}
+void VideoSlider::backward(){
+
+    int v = value()-10;
+    if(v<minimum())
+        v = minimum();
+    setValue(v);
+    emit sig_valueChanged(v);
+}
+
 void VideoSlider::resizeEvent(QResizeEvent *event)
 {
 //    qDebug()<<"void MySlider::resizeEvent(QResizeEvent *event)";

@@ -78,7 +78,7 @@ public:
 
     int64_t getTotalTime(); //单位微秒
     double getCurrentTime(); //单位秒
-
+    VideoPlayerState state(){return mPlayerState;}
 protected:
     void readVideoFile(); //读取视频文件
     void decodeVideoThread();

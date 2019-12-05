@@ -20,6 +20,8 @@ public:
     bool closeFile();
     void setValue(int value);
     bool seek();
+    void forward();
+    void backward();
 
 signals:
     void sig_clicked(qint64 mSec);

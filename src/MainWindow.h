@@ -14,7 +14,7 @@
 #include <QTimer>
 #include <QPushButton>
 #include <QPropertyAnimation>
-
+#include <QKeyEvent>
 #include "VideoPlayer/VideoPlayer.h"
 #include "DragAbleWidget.h"
 
@@ -33,7 +33,7 @@ public:
 
 protected:
     bool eventFilter(QObject *target, QEvent *event);
-
+    void keyPressEvent(QKeyEvent *event);
 private:
     Ui::MainWindow *ui;
 
