@@ -74,6 +74,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mVolume = mPlayer->getVolume();
 
     screenshotThread = new ScreenshotThread(this);
+    connect(screenshotThread,SIGNAL(done()),this,SLOT(slotResetTitle()));
 }
 
 MainWindow::~MainWindow()
@@ -349,9 +350,14 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
         //screenshoting = true;
         if(screenshotThread->isRunning())
             break;
+        setTitle("Anime4K里番播放器 截屏中...");
         screenshotThread->start();
         break;
     }
+}
+
+void MainWindow::slotResetTitle(){
+    setTitle("Anime4K里番播放器");
 }
 
 

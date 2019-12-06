@@ -52,7 +52,7 @@ private slots:
     void slotSliderMoved(int value);
     void slotTimerTimeOut();
     void slotBtnClick(bool isChecked);
-
+    void slotResetTitle();
 
     ///以下函数，是播放器的回调函数，用于输出信息给界面
 protected:
