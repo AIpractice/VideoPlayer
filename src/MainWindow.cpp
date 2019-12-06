@@ -188,13 +188,14 @@ void MainWindow::slotBtnClick(bool isChecked)
         QString s = QFileDialog::getOpenFileName(
                    this, QStringLiteral("选择要播放的文件"),
                     AppConfig::gVideoFilePath,//初始目录
-                    QStringLiteral("视频文件 (*.flv *.rmvb *.avi *.MP4 *.mkv);;")
-                    +QStringLiteral("音频文件 (*.mp3 *.wma *.wav);;")
-                    +QStringLiteral("所有文件 (*.*)"));
+                    QStringLiteral("视频文件 (*.flv *.rmvb *.avi *.MP4 *.mkv)"));
         if (!s.isEmpty())
         {
 //            s.replace("/","\\");
-
+            if(s.lastIndexOf('/')!=-1&&s.lastIndexOf('.')!=-1&&s.lastIndexOf('.')-s.lastIndexOf('/')-1>0)
+                screenshotThread->setVideoName(s.mid(s.lastIndexOf('/')+1,s.lastIndexOf('.')-s.lastIndexOf('/')-1));
+            else
+                screenshotThread->setVideoName(s);
             mPlayer->stop(true); //如果在播放则先停止
             mPlayer->startPlay(s.toStdString());
 

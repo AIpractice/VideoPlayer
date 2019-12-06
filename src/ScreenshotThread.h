@@ -10,13 +10,16 @@ class ScreenshotThread : public QThread
 public:
     explicit ScreenshotThread(QObject *parent = 0);
     ~ScreenshotThread();
-
+    void setVideoName(QString name);
 protected:
     //QThread的虚函数
     //线程处理函数
     //不能直接调用，通过start()间接调用
     void run();
 
+private:
+    int cnt;
+    QString videoName;
 signals:
     void done();  //处理完成信号
 
