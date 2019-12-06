@@ -17,7 +17,7 @@
 #include <QKeyEvent>
 #include "VideoPlayer/VideoPlayer.h"
 #include "DragAbleWidget.h"
-
+#include "ScreenshotThread.h"
 namespace Ui {
 class MainWindow;
 }
@@ -41,6 +41,7 @@ private:
     QTimer *mTimer; //定时器-获取当前视频时间
     float mVolume;
 
+    ScreenshotThread *screenshotThread; //截图并进行卷积神经网络处理的线程
     QTimer *mTimer_CheckControlWidget; //用于控制控制界面的出现和隐藏
     QPropertyAnimation *mAnimation_ControlWidget;   //控制底部控制控件的出现和隐藏
     void showOutControlWidget(); //显示底部控制控件

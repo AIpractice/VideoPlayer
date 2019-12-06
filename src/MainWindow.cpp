@@ -6,7 +6,7 @@
 
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-
+#include <windows.h>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QFileDialog>
@@ -73,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mVolume = mPlayer->getVolume();
 
+    screenshotThread = new ScreenshotThread(this);
 }
 
 MainWindow::~MainWindow()
@@ -342,6 +343,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
         if(v<ui->horizontalSlider_volume->minimum())
             v = ui->horizontalSlider_volume->minimum();
         ui->horizontalSlider_volume->setValue(v);
+        break;
+    case Qt::Key_P:
+        //screenshoting = true;
+        if(screenshotThread->isRunning())
+            break;
+        screenshotThread->start();
         break;
     }
 }

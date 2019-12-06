@@ -32,6 +32,7 @@ include(module/DragAbleWidget/DragAbleWidget.pri)
 
 SOURCES += \
     src/Anime4KPlugin.cpp \
+    src/ScreenshotThread.cpp \
     src/main.cpp \
     src/AppConfig.cpp \
     src/Base/FunctionTransfer.cpp \
@@ -44,6 +45,7 @@ HEADERS  += \
     src/AppConfig.h \
     src/Base/FunctionTransfer.h \
     src/MainWindow.h \
+    src/ScreenshotThread.h \
     src/Widget/ShowVideoWidget.h \
     src/Widget/VideoSlider.h
 
