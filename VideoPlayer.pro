@@ -49,6 +49,7 @@ HEADERS  += \
     src/Anime4KPlugin.h \
     src/AppConfig.h \
     src/Base/FunctionTransfer.h \
+    src/ImageKernel.hpp \
     src/MainWindow.h \
     src/ScreenshotThread.h \
     src/Waifu2x/src/convertRoutine.hpp \
